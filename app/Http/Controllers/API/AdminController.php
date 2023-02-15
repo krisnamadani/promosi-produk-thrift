@@ -15,7 +15,7 @@ class AdminController extends Controller
         {
             $photo = $request->file('photo');
             $photo_name = time() . '.' . $photo->getClientOriginalExtension();
-            $photo->move(public_path('admin'), $photo_name);
+            $photo->move(public_path('product'), $photo_name);
 
             $data = [
                 'admin_id' => $request->admin_id,
@@ -54,7 +54,7 @@ class AdminController extends Controller
         {
             $photo = $request->file('photo');
             $photo_name = time() . '.' . $photo->getClientOriginalExtension();
-            $photo->move(public_path('product'), $photo_name);
+            $photo->move(public_path('admin'), $photo_name);
             
             $data = [
                 'email' => $request->email,
