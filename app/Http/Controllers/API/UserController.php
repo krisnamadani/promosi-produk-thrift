@@ -30,6 +30,7 @@ class UserController extends Controller
                 'color' => $product->color,
                 'size' => $product->size,
                 'brand' => $product->brand,
+                'admin_name' => $product->admin->name,
                 'distance' => round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km',
             ];
         }
@@ -71,6 +72,7 @@ class UserController extends Controller
                 'color' => $product->color,
                 'size' => $product->size,
                 'brand' => $product->brand,
+                'admin_name' => $product->admin->name,
                 'distance' => round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km',
             ];
         }
