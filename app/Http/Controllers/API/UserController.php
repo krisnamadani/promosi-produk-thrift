@@ -103,8 +103,8 @@ class UserController extends Controller
                 'address' => $admin->address,
                 'latitude' => $admin->latitude,
                 'longitude' => $admin->longitude,
-                // 'distance' => round($this->haversine($latitude, $longitude, $admin->latitude, $admin->longitude), 2).' km',
-                'distance' => $this->haversine($latitude, $longitude, $admin->latitude, $admin->longitude),
+                'distance' => round($this->haversine($latitude, $longitude, $admin->latitude, $admin->longitude), 2).' km',
+                // 'distance' => $this->haversine($latitude, $longitude, $admin->latitude, $admin->longitude),
             ];
         }
 
@@ -132,14 +132,44 @@ class UserController extends Controller
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
         $distance = $angle * 6371;
 
-        return [
-            'sin1' => pow(sin($latDelta / 2), 2),
-            'sin2' => pow(sin($lonDelta / 2), 2),
-            'nonsqrt' => (pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)),
-            'sqrt' => sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)),
-            'asin' => asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)))
-        ];
+        // return [
+        //     'sin1' => pow(sin($latDelta / 2), 2),
+        //     'sin2' => pow(sin($lonDelta / 2), 2),
+        //     'nonsqrt' => (pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)),
+        //     'sqrt' => sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)),
+        //     'asin' => asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)))
+        // ];
         
         return $distance;
+    }
+
+    public function detail_produk(Request $request, $id)
+    {
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+
+        $product = Product::with('admin')->find($id);
+        $product->distance = round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km';
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'product detail',
+            'data' => $product,
+        ]);
+    }
+
+    public function detail_toko(Request $request, $id)
+    {
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+
+        $admin = Admin::find($id);
+        $admin->distance = round($this->haversine($latitude, $longitude, $admin->latitude, $admin->longitude), 2).' km';
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'admin detail',
+            'data' => $admin,
+        ]);
     }
 }
