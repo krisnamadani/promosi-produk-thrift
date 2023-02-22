@@ -149,6 +149,7 @@ class UserController extends Controller
         $longitude = $request->longitude;
 
         $product = Product::with('admin')->find($id);
+        $product->photo = url('product/' . $product->photo);
         $product->distance = round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km';
 
         return response()->json([
@@ -164,6 +165,7 @@ class UserController extends Controller
         $longitude = $request->longitude;
 
         $admin = Admin::find($id);
+        $admin->photo = url('admin/' . $admin->photo);
         $admin->distance = round($this->haversine($latitude, $longitude, $admin->latitude, $admin->longitude), 2).' km';
 
         return response()->json([
