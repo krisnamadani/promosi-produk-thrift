@@ -131,14 +131,6 @@ class UserController extends Controller
         
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
         $distance = $angle * 6371;
-
-        // return [
-        //     'sin1' => pow(sin($latDelta / 2), 2),
-        //     'sin2' => pow(sin($lonDelta / 2), 2),
-        //     'nonsqrt' => (pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)),
-        //     'sqrt' => sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)),
-        //     'asin' => asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)))
-        // ];
         
         return $distance;
     }
