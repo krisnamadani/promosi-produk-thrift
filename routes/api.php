@@ -14,20 +14,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// user
+Route::get('produk', [App\Http\Controllers\API\UserController::class, 'produk']);
+Route::get('produk/{id}', [App\Http\Controllers\API\UserController::class, 'produk_detail']);
 
-Route::get('/home', [App\Http\Controllers\API\UserController::class, 'home']);
-Route::get('/cari', [App\Http\Controllers\API\UserController::class, 'cari']);
-Route::get('/toko', [App\Http\Controllers\API\UserController::class, 'toko']);
+Route::get('toko', [App\Http\Controllers\API\UserController::class, 'toko']);
+Route::get('toko/{id}', [App\Http\Controllers\API\UserController::class, 'toko_detail']);
+Route::get('toko/{id}/produk', [App\Http\Controllers\API\UserController::class, 'toko_produk']);
 
-Route::get('/produk/{id}', [App\Http\Controllers\API\UserController::class, 'detail_produk']);
-Route::get('/toko/{id}', [App\Http\Controllers\API\UserController::class, 'detail_toko']);
 
-Route::get('/toko/{id}/produk', [App\Http\Controllers\API\UserController::class, 'produk_toko']);
+// login dan register
+Route::post('login', [App\Http\Controllers\API\AdminController::class, 'login']);
+Route::post('register', [App\Http\Controllers\API\AdminController::class, 'register']);
 
-Route::post('/login', [App\Http\Controllers\API\AdminController::class, 'login']);
-Route::post('/register', [App\Http\Controllers\API\AdminController::class, 'register']);
-Route::post('/tambah_produk', [App\Http\Controllers\API\AdminController::class, 'tambah_produk']);
-Route::post('/edit_produk', [App\Http\Controllers\API\AdminController::class, 'edit_produk']);
+
+// admin
+Route::get('admin/produk', [App\Http\Controllers\API\AdminController::class, 'produk']);
+Route::get('admin/produk/{id}', [App\Http\Controllers\API\AdminController::class, 'produk_detail']);
+Route::post('admin/produk-tambah', [App\Http\Controllers\API\AdminController::class, 'produk_tambah']);
+Route::post('admin/produk-edit', [App\Http\Controllers\API\AdminController::class, 'produk_edit']);
+Route::post('admin/produk-hapus', [App\Http\Controllers\API\AdminController::class, 'produk_hapus']);
+
+Route::get('admin/profil', [App\Http\Controllers\API\AdminController::class, 'profil']);
+Route::post('admin/profil-edit', [App\Http\Controllers\API\AdminController::class, 'profil_edit']);
