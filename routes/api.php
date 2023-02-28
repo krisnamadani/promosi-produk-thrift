@@ -25,6 +25,8 @@ Route::get('/toko', [App\Http\Controllers\API\UserController::class, 'toko']);
 Route::get('/produk/{id}', [App\Http\Controllers\API\UserController::class, 'detail_produk']);
 Route::get('/toko/{id}', [App\Http\Controllers\API\UserController::class, 'detail_toko']);
 
+Route::get('/toko/{id}/produk'. [App\Http\Controllers\API\UserController::class, 'produk_toko']);
+
 Route::post('/login', [App\Http\Controllers\API\AdminController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\API\AdminController::class, 'register']);
 Route::post('/tambah_produk', [App\Http\Controllers\API\AdminController::class, 'tambah_produk']);

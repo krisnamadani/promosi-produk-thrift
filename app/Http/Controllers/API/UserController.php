@@ -166,4 +166,37 @@ class UserController extends Controller
             'data' => $admin,
         ]);
     }
+
+    public function produk_toko(Request $request, $id)
+    {
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+
+        $products = Product::where('admin_id', $id)->get();
+
+        $products_with_distance = [];
+        
+        foreach($products as $product) {
+            $products_with_distance[] = [
+                'id' => $product->id,
+                'photo' => url('product/' . $product->photo),
+                'name' => $product->name,
+                'description' => $product->description,
+                'type' => $product->type,
+                'price' => $product->price,
+                'material' => $product->material,
+                'color' => $product->color,
+                'size' => $product->size,
+                'brand' => $product->brand,
+                'admin_name' => $product->admin->name,
+                'distance' => round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km',
+            ];
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'product list from admin',
+            'data' => $products_with_distance,
+        ]);
+    }
 }
