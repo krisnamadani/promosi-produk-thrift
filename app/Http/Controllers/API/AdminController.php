@@ -85,4 +85,42 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    public function login(Request $request)
+    {
+        try
+        {
+            $admin = Admin::where('email', $request->email)->first();
+    
+            if ($admin) {
+                if (password_verify($request->password, $admin->password)) {
+                    return response()->json([
+                        'status' => 200,
+                        'message' => 'login success',
+                        'data' => $admin,
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => 401,
+                        'message' => 'login failed',
+                        'data' => null,
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => 401,
+                    'message' => 'login failed',
+                    'data' => null,
+                ]);
+            }
+        }
+        catch (\Throwable $th)
+        {
+            return response()->json([
+                'status' => 500,
+                'message' => 'login failed',
+                'data' => $th->getMessage(),
+            ]);
+        }
+    }
 }
