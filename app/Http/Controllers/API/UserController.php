@@ -63,8 +63,8 @@ class UserController extends Controller
             $product = Product::with('admin')->find($id);
             $product->photo = url('product/' . $product->photo);
             $product->distance = round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km';
-            $product->user_latitude = $latitude;
-            $product->user_longitude = $longitude;
+            $product->latitude = $latitude;
+            $product->longitude = $longitude;
 
             return response()->json([
                 'status' => 200,
