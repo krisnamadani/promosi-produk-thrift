@@ -16,7 +16,16 @@ class UserController extends Controller
             $latitude = $request->latitude;
             $longitude = $request->longitude;
 
-            $products = Product::get();
+            $products = Product::when($request->search, function($query) use($request) {
+                $query->where('name', 'like', '%'.$request->search.'%')
+                ->orWhere('description', 'like', '%'.$request->search.'%')
+                ->orWhere('type', 'like', '%'.$request->search.'%')
+                ->orWhere('price', 'like', '%'.$request->search.'%')
+                ->orWhere('material', 'like', '%'.$request->search.'%')
+                ->orWhere('color', 'like', '%'.$request->search.'%')
+                ->orWhere('size', 'like', '%'.$request->search.'%')
+                ->orWhere('brand', 'like', '%'.$request->search.'%');
+            })->get();
             
             $products_map = [];
 
