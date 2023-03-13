@@ -46,6 +46,8 @@ class UserController extends Controller
                 ];
             }
 
+            $products_map = collect($products_map)->sortBy('distance')->values()->all();
+
             return response()->json([
                 'status' => 200,
                 'message' => 'success',
