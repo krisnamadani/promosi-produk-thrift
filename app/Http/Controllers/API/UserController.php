@@ -42,16 +42,35 @@ class UserController extends Controller
                     'size' => $product->size,
                     'brand' => $product->brand,
                     'admin_name' => $product->admin->name,
-                    'distance' => round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2).' km',
+                    'distance' => round($this->haversine($latitude, $longitude, $product->admin->latitude, $product->admin->longitude), 2),
                 ];
             }
 
             $products_map = collect($products_map)->sortBy('distance')->values()->all();
 
+            $products_map2 = [];
+
+            foreach($products_map as $product) {
+                $products_map2[] = [
+                    'id' => $product['id'],
+                    'photo' => $product['photo'],
+                    'name' => $product['name'],
+                    'description' => $product['description'],
+                    'type' => $product['type'],
+                    'price' => $product['price'],
+                    'material' => $product['material'],
+                    'color' => $product['color'],
+                    'size' => $product['size'],
+                    'brand' => $product['brand'],
+                    'admin_name' => $product['admin_name'],
+                    'distance' => $product['distance'].' km',
+                ];
+            }
+
             return response()->json([
                 'status' => 200,
                 'message' => 'success',
-                'data' => $products_map,
+                'data' => $products_map2,
             ]);
         }
         catch(\Exception $e)
